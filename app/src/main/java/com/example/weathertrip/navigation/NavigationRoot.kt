@@ -2,6 +2,7 @@ package com.example.weathertrip.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -29,13 +30,13 @@ fun NavigationRoot(
     Scaffold(
         modifier = modifier,
         bottomBar = {
-               NavBar(
-                   selectedKey = navigationState.topLevelRoute,
-                   onSelectKey = {
-                       navigator.navigate(it)
-                   }
-               )
-            }
+            NavBar(
+                selectedKey = navigationState.topLevelRoute,
+                onSelectKey = {
+                    navigator.navigate(it)
+                }
+            )
+        }
     ) { innerPadding ->
         NavDisplay(
             modifier = Modifier
@@ -60,5 +61,4 @@ fun NavigationRoot(
             )
         )
     }
-
 }
