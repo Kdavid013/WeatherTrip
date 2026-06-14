@@ -10,3 +10,5 @@ val LineColor = Color(0xff0E5BA9)
 val navBarColor = Color(0xff0387CE)
 val accentColor = Color(0xffFFB300)
 val fieldColor = Color(0xff3B8DCE)
+
+val gradientColors = listOf(gradientTop, gradientBottom)
