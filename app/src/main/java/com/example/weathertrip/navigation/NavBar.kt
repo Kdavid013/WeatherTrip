@@ -2,6 +2,7 @@ package com.example.weathertrip.composeui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBarItem
@@ -36,14 +37,15 @@ fun NavBar(
                 icon = {
                     Icon(
                         painter = painterResource(id = data.icon),
-                        contentDescription = data.label
+                        contentDescription = data.label,
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
                     selectedIconColor = Color.Black,
                     unselectedIconColor = fontColor,
                     indicatorColor = accentColor
-                )
+                ),
+
             )
         }
     }

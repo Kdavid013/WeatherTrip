@@ -35,9 +35,9 @@ fun InputField(
         fontFamily = interFontFamily,
         fontWeight = FontWeight.Normal
     )
-    Spacer(modifier = Modifier.height(20.dp))
     TextField(
-        state = rememberTextFieldState(initialText = fieldText),
+        state = rememberTextFieldState(initialText = ""),
+        placeholder = {Text(fieldText)},
         shape = RoundedCornerShape(50),
         colors = TextFieldDefaults.colors(
             focusedTextColor = fontColor,
