@@ -24,8 +24,6 @@ fun HomeView(
     viewModel: HomeViewViewModel = viewModel(),
     modifier: Modifier = Modifier
 ){
-
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -37,9 +35,9 @@ fun HomeView(
         Spacer(modifier = Modifier.height(30.dp))
         InputField("Destination", "To")
         Text("Date:")
-        DatePicker(
-            state = rememberDatePickerState(),
-        )
+//        DatePicker(
+//            state = rememberDatePickerState(),
+//        )
     }
 
 }

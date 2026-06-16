@@ -48,7 +48,7 @@ fun InputField(
             unfocusedIndicatorColor = androidx.compose.ui.graphics.Color.Transparent,
 
             ),
-        modifier = modifier
+        modifier = Modifier
             .fillMaxWidth()
             .border(width = 2.dp,
                 color = fontColor,
