@@ -7,18 +7,22 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.example.weathertrip.composeui.NavBar
+import com.example.weathertrip.viewmodels.BleViewModel
 import com.example.weathertrip.views.HomeView
 import com.example.weathertrip.views.RouteView
-import com.example.weathertrip.views.SettingsView
+import com.example.weathertrip.views.BleScreen
 import com.example.weathertrip.views.StatisticsView
 
 
 @Composable
 fun NavigationRoot(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    bleViewModel: BleViewModel
 ) {
     val navigationState = rememberNavigationState(
         startRoute = Route.Home,
@@ -55,7 +59,7 @@ fun NavigationRoot(
                         StatisticsView()
                     }
                     entry<Route.Settings> {
-                        SettingsView()
+                        BleScreen(viewModel = bleViewModel)
                     }
                 }
             )

@@ -24,11 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Canvas
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.weathertrip.viewmodels.HomeViewViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.weathertrip.R
 import com.example.weathertrip.apptheme.*
 import com.example.weathertrip.ui.elements.InputField
 
@@ -50,7 +52,7 @@ fun HomeView(
         Column(
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
-            InputField("Start point", "From")
+            InputField(stringResource(R.string.start_point), "From")
             InputField("Destination", "To")
             InputField("Date", "Pick a date")
 //        DatePicker(
