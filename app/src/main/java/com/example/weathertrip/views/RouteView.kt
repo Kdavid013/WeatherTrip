@@ -56,7 +56,5 @@ fun RouteView(
         item {
             RouteCard()
         }
-
-
     }
 }
