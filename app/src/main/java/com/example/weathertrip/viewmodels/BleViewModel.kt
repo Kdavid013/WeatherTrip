@@ -9,7 +9,6 @@ import com.welie.blessed.BluetoothCentralManager
 import com.welie.blessed.BluetoothPeripheral
 import com.welie.blessed.BluetoothPeripheralCallback
 import com.welie.blessed.GattStatus
-import com.welie.blessed.WriteType
 import java.util.UUID
 
 class BleViewModel(private val central: BluetoothCentralManager) : ViewModel() {
@@ -17,7 +16,13 @@ class BleViewModel(private val central: BluetoothCentralManager) : ViewModel() {
     var connectionState by mutableStateOf("Nincs csatlakozva")
         private set
 
-    // Ebbe a listába gyűjtjük a megtalált eszközöket, a Compose UI látni fogja a változást
+    // Állapotváltozók az időjárási adatoknak
+    var temperature by mutableStateOf("--")
+        private set
+
+    var humidity by mutableStateOf("--")
+        private set
+
     val discoveredDevices = mutableStateListOf<BluetoothPeripheral>()
 
     var isScanning by mutableStateOf(false)
@@ -26,16 +31,11 @@ class BleViewModel(private val central: BluetoothCentralManager) : ViewModel() {
     private val serviceUuid = UUID.fromString("0000180F-0000-1000-8000-00805f9b34fb")
     private val charUuid = UUID.fromString("00002a19-0000-1000-8000-00805f9b34fb")
 
-    // --- Keresés (Scan) indítása és leállítása ---
     fun startScanning() {
         if (isScanning) return
         discoveredDevices.clear()
         connectionState = "Eszközök keresése..."
         isScanning = true
-
-        // Elindítjuk a keresést. A Blessed a MainActivity-ben megadott callback-en
-        // keresztül fogja visszadni a találatokat, de mi most közvetlenül a central-ból is lekérhetjük,
-        // vagy kézzel is menedzselhetjük. De a legtisztább, ha adunk neki egy szűrést vagy átírjuk a MainActivity-t.
         central.scanForPeripherals()
     }
 
@@ -48,36 +48,63 @@ class BleViewModel(private val central: BluetoothCentralManager) : ViewModel() {
         }
     }
 
-    // Ezt a függvényt fogjuk hívni a MainActivity callback-jéből, hogy beillesszük a talált eszközt
     fun addDiscoveredDevice(peripheral: BluetoothPeripheral) {
-        // Csak akkor adjuk hozzá, ha még nincs benne a listában és van neve (opcionális szűrés)
-        if (!discoveredDevices.contains(peripheral) && !peripheral.name.isNullOrBlank()) {
+        if (!discoveredDevices.any { it.address == peripheral.address } && !peripheral.name.isNullOrBlank()) {
             discoveredDevices.add(peripheral)
         }
     }
 
-    // --- Csatlakozás ---
+    // --- Csatlakozás és Adatfogadás ---
     private val peripheralCallback = object : BluetoothPeripheralCallback() {
+
         override fun onServicesDiscovered(peripheral: BluetoothPeripheral) {
-            connectionState = "Szolgáltatások feltérképezve, adatküldés..."
+            connectionState = "Kapcsolódva! Feliratkozás az adatokra..."
             val characteristic = peripheral.getCharacteristic(serviceUuid, charUuid)
+
             if (characteristic != null) {
-                val dataToSend = byteArrayOf(0x01)
-                peripheral.writeCharacteristic(characteristic, dataToSend, WriteType.WITH_RESPONSE)
+                // Bekapcsoljuk az értesítéseket (NOTIFY) a karakterisztikára
+                val success = peripheral.setNotify(characteristic, true)
+                if (!success) {
+                    connectionState = "Hiba: Nem sikerült feliratkozni az értesítésekre!"
+                }
             } else {
                 connectionState = "Hiba: Karakterisztika nem található!"
             }
         }
 
-        override fun onCharacteristicWrite(
-            peripheral: BluetoothPeripheral, value: ByteArray, characteristic: android.bluetooth.BluetoothGattCharacteristic, status: GattStatus
+        // Ide érkeznek be az adatok minden alkalommal, amikor az ESP32 meghívja a notify() függvényt
+        override fun onCharacteristicUpdate(
+            peripheral: BluetoothPeripheral,
+            value: ByteArray,
+            characteristic: android.bluetooth.BluetoothGattCharacteristic,
+            status: GattStatus
         ) {
-            connectionState = if (status == GattStatus.SUCCESS) "Adat elküldve!" else "Hiba: $status"
+            if (status == GattStatus.SUCCESS && characteristic.uuid == charUuid) {
+                val payload = String(value, Charsets.UTF_8) // pl. "24.5,60.0"
+                val parts = payload.split(",")
+                if (parts.size == 2) {
+                    temperature = parts[0]
+                    humidity = parts[1]
+                    connectionState = "Adatok fogadása folyamatban"
+                }
+            }
+        }
+
+        override fun onNotificationStateUpdate(
+            peripheral: BluetoothPeripheral,
+            characteristic: android.bluetooth.BluetoothGattCharacteristic,
+            status: GattStatus
+        ) {
+            if (status == GattStatus.SUCCESS) {
+                connectionState = "Adatfogadás aktív"
+            } else {
+                connectionState = "Hiba az értesítés beállításakor: $status"
+            }
         }
     }
 
     fun connectToEsp32(peripheral: BluetoothPeripheral) {
-        stopScanning() // Csatlakozás előtt érdemes leállítani a keresést
+        stopScanning()
         try {
             connectionState = "Csatlakozás ide: ${peripheral.name}..."
             central.connectPeripheral(peripheral, peripheralCallback)

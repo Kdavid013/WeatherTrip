@@ -8,22 +8,18 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.weathertrip.viewmodels.BleViewModel
 
 @Composable
-fun BleScreen(viewModel: BleViewModel = viewModel()) {
+fun BleScreen(viewModel: BleViewModel) { // Kivettük a hibás default értéket
 
-    // 1. Frissített engedélykérő: minden szükséges jogot megvizsgál
     val permissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -31,7 +27,6 @@ fun BleScreen(viewModel: BleViewModel = viewModel()) {
         val connectGranted = permissions[Manifest.permission.BLUETOOTH_CONNECT] == true
         val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true
 
-        // Csak akkor indítunk scannelést, ha minden kritikus engedély megvan
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             if (scanGranted && connectGranted && fineLocationGranted) {
                 viewModel.startScanning()
@@ -54,11 +49,42 @@ fun BleScreen(viewModel: BleViewModel = viewModel()) {
 
         Spacer(modifier = Modifier.height(16.dp))
 
+        // IDŐJÁRÁS ADATOK KIJELZŐ KÁRTYA
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primaryContainer)
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Hőmérséklet", fontSize = 14.sp)
+                    Text(
+                        text = "${viewModel.temperature} °C",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("Páratartalom", fontSize = 14.sp)
+                    Text(
+                        text = "${viewModel.humidity} %",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = {
             if (viewModel.isScanning) {
                 viewModel.stopScanning()
             } else {
-                // 2. A gomb megnyomásakor kötelezően átadjuk a helyadat-kérést is!
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
                     permissionLauncher.launch(
                         arrayOf(
@@ -76,7 +102,9 @@ fun BleScreen(viewModel: BleViewModel = viewModel()) {
         }) {
             Text(if (viewModel.isScanning) "Keresés leállítása" else "Eszközök keresése")
         }
-        // Dinamikus lista a megtalált BLE eszközökből
+
+        Spacer(modifier = Modifier.height(16.dp))
+
         LazyColumn(
             modifier = Modifier.fillMaxWidth(),
             verticalArrangement = Arrangement.spacedBy(8.dp)
