@@ -35,7 +35,11 @@ import com.example.weathertrip.apptheme.interFontFamily
 import com.example.weathertrip.apptheme.lineColor
 
 @Composable
-fun RouteCard () {
+fun RouteCard (
+    cityName : String
+) {
+
+
 
     val innerCircleRadius = 10.dp
     val outerCircleRadius = 12.dp
@@ -69,7 +73,7 @@ fun RouteCard () {
                     .fillMaxSize()
             ) {
                 Text(
-                    text = "Debrecen",
+                    text = cityName,
                     fontFamily = interFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,

@@ -73,6 +73,7 @@ val serializersConfig = SavedStateConfiguration {
             subclass(Route.Trip::class, Route.Trip.serializer())
             subclass(Route.Statictics::class, Route.Statictics.serializer())
             subclass(Route.Settings::class, Route. Settings.serializer())
+            subclass(Route.TripDetails::class, Route.TripDetails.serializer())
         }
     }
 }

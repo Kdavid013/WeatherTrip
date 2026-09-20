@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -20,19 +21,31 @@ import com.example.weathertrip.R
 import com.example.weathertrip.apptheme.*
 import com.example.weathertrip.ui.elements.AutoCompleteInputField
 import com.example.weathertrip.ui.elements.InputField
+import com.example.weathertrip.ui.elements.TravelModeSelector
 import com.example.weathertrip.viewmodels.HomeViewViewModel
 
 @Composable
 fun HomeView(
     viewModel: HomeViewViewModel = viewModel(),
+    onNavigateToRoute: (profile: String, coordinates: String) -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    val selectedTravelMode by viewModel.selectedTravelMode.collectAsState()
+
     // ViewModel állapotok összegyűjtése Compose State-ként
     val startQuery by viewModel.startQuery.collectAsState()
     val startSuggestions by viewModel.startSuggestions.collectAsState()
 
     val destinationQuery by viewModel.destinationQuery.collectAsState()
     val destinationSuggestions by viewModel.destinationSuggestions.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.navigateEvent.collect { event ->
+            // Ha jön esemény, átadjuk a navigációs callback-nek
+            onNavigateToRoute(event.first, event.second)
+        }
+    }
 
     Column(
         modifier = modifier
@@ -66,14 +79,19 @@ fun HomeView(
 
             // 3. Dátumválasztó (hagyományos InputField)
             InputField("Date", "Pick a date")
+            TravelModeSelector(
+                selectedMode = selectedTravelMode,
+                onModeSelected = { viewModel.onTravelModeChange(it) }
+            )
         }
+
 
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
-                onClick = { /* TODO: Útvonal lekérése a koordináták alapján */ },
+                onClick = { viewModel.onGoClicked() },
                 shape = CircleShape,
                 modifier = Modifier.size(100.dp),
                 border = BorderStroke(1.dp, fontColor),

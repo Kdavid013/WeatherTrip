@@ -14,7 +14,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.layout
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -24,21 +23,20 @@ import com.example.weathertrip.R
 import com.example.weathertrip.apptheme.fieldColor
 import com.example.weathertrip.apptheme.fontColor
 import com.example.weathertrip.apptheme.interFontFamily
-import com.example.weathertrip.responses.SuggestionItem
-
+import com.example.weathertrip.models.SuggestionItemModel
 
 @Composable
 fun AutoCompleteInputField(
     label: String,
     placeholder: String,
     value: String,
-    suggestions: List<SuggestionItem>,
+    suggestions: List<SuggestionItemModel>,
     onValueChange: (String) -> Unit,
-    onSuggestionSelected: (SuggestionItem) -> Unit,
+    onSuggestionSelected: (SuggestionItemModel) -> Unit,
     modifier: Modifier = Modifier
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var displayedSuggestions by remember { mutableStateOf(emptyList<SuggestionItem>()) }
+    var displayedSuggestions by remember { mutableStateOf(emptyList<SuggestionItemModel>()) }
 
     LaunchedEffect(suggestions) {
         if (suggestions.isNotEmpty()) {
@@ -133,12 +131,12 @@ fun AutoCompleteInputField(
                                     .padding(horizontal = 16.dp, vertical = 12.dp)
                             ) {
                                 Text(
-                                    text = item.name,
+                                    text = item.title,
                                     fontFamily = interFontFamily,
                                     fontWeight = FontWeight.Bold,
                                     color = fontColor
                                 )
-                                item.place_formatted?.let {
+                                item.subtitle?.let {
                                     Text(
                                         text = it,
                                         fontSize = 12.sp,
