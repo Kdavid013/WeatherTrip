@@ -1,4 +1,5 @@
 import com.example.weathertrip.network.DirectionsApiService
+import com.example.weathertrip.network.OpenMeteoApi
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -20,8 +21,6 @@ object NetworkModule {
             .readTimeout(15, TimeUnit.SECONDS)
             .build()
     }
-
-
 
     // 2. Mapbox Retrofit példány & Szerviz
     private val mapboxRetrofit: Retrofit by lazy {
@@ -45,7 +44,7 @@ object NetworkModule {
             .build()
     }
 
-//    val openMeteoApi: OpenMeteoApi by lazy {
-//        openMeteoRetrofit.create(OpenMeteoApi::class.java)
-//    }
+    val openMeteoApi: OpenMeteoApi by lazy {
+        openMeteoRetrofit.create(OpenMeteoApi::class.java)
+    }
 }

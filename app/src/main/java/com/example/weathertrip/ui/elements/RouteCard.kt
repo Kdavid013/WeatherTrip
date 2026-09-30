@@ -36,7 +36,10 @@ import com.example.weathertrip.apptheme.lineColor
 
 @Composable
 fun RouteCard (
-    cityName : String
+    cityName : String,
+    currentTemp: String,
+    expectedTemp: String,
+    expectedTime: String = "15:00"
 ) {
 
 
@@ -111,7 +114,7 @@ fun RouteCard (
                                     .size(35.dp)
                             )
                             Text(
-                                text = "32°C",
+                                text = currentTemp,
                                 fontFamily = interFontFamily,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 36.sp,
@@ -145,7 +148,7 @@ fun RouteCard (
                                     .size(35.dp)
                             )
                             Text(
-                                text = "25°C",
+                                text = expectedTemp,
                                 fontFamily = interFontFamily,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 36.sp,
@@ -154,7 +157,7 @@ fun RouteCard (
                         }
                         Spacer(Modifier.height(10.dp))
                         Text(
-                            "At 15:30",
+                            "At $expectedTime",
                             fontFamily = interFontFamily,
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,

@@ -52,9 +52,9 @@ fun RouteView(
                 modifier = Modifier.fillMaxSize(),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                items(routeCities) { cityName ->
+                items(routeCities) { stop ->
                     // Győződj meg róla, hogy a RouteCard fogadja a cityName String paramétert!
-                    RouteCard(cityName = cityName.toString())
+                    RouteCard(stop.cityName, stop.currentTemp, stop.expectedTemp, stop.expectedTime )
                 }
             }
         }
