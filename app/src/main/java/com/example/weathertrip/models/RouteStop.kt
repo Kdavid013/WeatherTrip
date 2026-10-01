@@ -5,4 +5,6 @@ data class RouteStop(
     val currentTemp: String,
     val expectedTemp: String,
     val expectedTime: String,
+    val currentWeatherCode: Int,
+    val expectedWeatherCode: Int
 )

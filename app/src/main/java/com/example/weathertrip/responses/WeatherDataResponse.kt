@@ -12,7 +12,9 @@ data class CurrentWeatherFeatue(
     @SerializedName("temperature_2m")
     val temp: Double? = null,
     @SerializedName("relative_humidity_2m")
-    val humidity: Int? = null
+    val humidity: Int? = null,
+    @SerializedName("weather_code")
+    val weatherCode: Int? = null
 )
 
 data class ExpextedWeatherFeature(
@@ -20,5 +22,7 @@ data class ExpextedWeatherFeature(
     @SerializedName("temperature_2m")
     val temperature: List<Float>? = null,
     @SerializedName("relative_humidity_2m")
-    val humidity: List<Float>? = null
+    val humidity: List<Float>? = null,
+    @SerializedName("weather_code")
+    val weatherCode: List<Int>? = null
 )

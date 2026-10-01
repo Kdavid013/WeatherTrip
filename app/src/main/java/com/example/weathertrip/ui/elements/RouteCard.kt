@@ -39,7 +39,9 @@ fun RouteCard (
     cityName : String,
     currentTemp: String,
     expectedTemp: String,
-    expectedTime: String = "15:00"
+    expectedTime: String = "15:00",
+    currentWeatherCode: Int,
+    expectedWeatherCode: Int
 ) {
 
 
@@ -107,7 +109,7 @@ fun RouteCard (
                         Spacer(Modifier.height(4.dp))
                         Row() {
                             Icon(
-                                painter = painterResource(R.drawable.sunny),
+                                painter = painterResource(getWeatherIconRes(currentWeatherCode)),
                                 contentDescription = "icon",
                                 tint = Color.Unspecified,
                                 modifier = Modifier
@@ -141,7 +143,7 @@ fun RouteCard (
                         Spacer(Modifier.height(4.dp))
                         Row() {
                             Icon(
-                                painter = painterResource(R.drawable.rain),
+                                painter = painterResource(getWeatherIconRes(expectedWeatherCode)),
                                 contentDescription = "icon",
                                 tint = Color.Unspecified,
                                 modifier = Modifier

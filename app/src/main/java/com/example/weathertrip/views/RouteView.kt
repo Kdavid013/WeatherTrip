@@ -33,9 +33,8 @@ fun RouteView(
     val routeCities by viewModel.routeCities.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
 
-    // Amikor ez a Composable bekerül a kompozícióba, elindul a hívás
     LaunchedEffect(profile, coordinates) {
-        viewModel.loadRoute(profile, coordinates)
+            viewModel.loadRoute(profile, coordinates)
     }
 
     Box(
@@ -43,7 +42,7 @@ fun RouteView(
             .fillMaxSize()
             .background(Brush.verticalGradient(colors = gradientColors))
             .padding(30.dp),
-        contentAlignment = Alignment.Center // Középre igazítjuk a betöltés jelzőt
+        contentAlignment = Alignment.Center
     ) {
         if (isLoading) {
             CircularProgressIndicator(color = fontColor)
@@ -53,8 +52,7 @@ fun RouteView(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 items(routeCities) { stop ->
-                    // Győződj meg róla, hogy a RouteCard fogadja a cityName String paramétert!
-                    RouteCard(stop.cityName, stop.currentTemp, stop.expectedTemp, stop.expectedTime )
+                    RouteCard(stop.cityName, stop.currentTemp, stop.expectedTemp, stop.expectedTime, stop.currentWeatherCode, stop.expectedWeatherCode )
                 }
             }
         }
