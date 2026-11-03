@@ -16,6 +16,7 @@ import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
 import com.example.weathertrip.composeui.NavBar
 import com.example.weathertrip.viewmodels.BleViewModel
+import com.example.weathertrip.viewmodels.RouteViewViewModel
 import com.example.weathertrip.views.HomeView
 import com.example.weathertrip.views.RouteView
 import com.example.weathertrip.views.BleScreen
@@ -34,6 +35,8 @@ fun NavigationRoot(
     val navigator = remember {
         Navigator(navigationState)
     }
+
+    val routeViewModel: RouteViewViewModel = viewModel()
 
     // 1. Létrehozunk két változót a kiválasztott útvonal adatainak
     var activeProfile by remember { mutableStateOf("") }
@@ -74,12 +77,16 @@ fun NavigationRoot(
                         // 4. Átadjuk az eltárolt adatokat a RouteView-nak
                         RouteView(
                             profile = activeProfile,
-                            coordinates = activeCoordinates
+                            coordinates = activeCoordinates,
+                            viewModel = routeViewModel
                         )
                     }
 
                     entry<Route.Statictics> {
-                        StatisticsView()
+                        StatisticsView(
+                            routeViewModel = routeViewModel,
+                            bleViewModel = bleViewModel
+                        )
                     }
                     entry<Route.Settings> {
                         BleScreen(viewModel = bleViewModel)

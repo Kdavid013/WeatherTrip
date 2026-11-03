@@ -23,6 +23,8 @@ class BleViewModel(private val central: BluetoothCentralManager) : ViewModel() {
     var humidity by mutableStateOf("--")
         private set
 
+    val temperatureHistory = mutableStateListOf<Float>()
+
     val discoveredDevices = mutableStateListOf<BluetoothPeripheral>()
 
     var isScanning by mutableStateOf(false)
@@ -86,6 +88,10 @@ class BleViewModel(private val central: BluetoothCentralManager) : ViewModel() {
                     temperature = parts[0]
                     humidity = parts[1]
                     connectionState = "Adatok fogadása folyamatban"
+                    val tempFloat = parts[0].toFloatOrNull()
+                    if (tempFloat != null) {
+                        temperatureHistory.add(tempFloat)
+                    }
                 }
             }
         }
@@ -111,5 +117,20 @@ class BleViewModel(private val central: BluetoothCentralManager) : ViewModel() {
         } catch (e: Exception) {
             connectionState = "Hiba: ${e.localizedMessage}"
         }
+    }
+
+    fun loadDummyData() {
+        connectionState = "Teszt mód (Mock adatok)"
+        temperature = "24.5"
+        humidity = "55.0"
+
+        // Töröljük a korábbiakat, ha lennének
+        temperatureHistory.clear()
+
+        // Generálunk egy hihető hőmérséklet görbét (pl. melegszik, majd kicsit hűl)
+        val dummyTemperatures = listOf(
+            23.5f, 23.8f, 24.2f, 24.6f, 24.9f, 25.1f, 25.0f, 24.8f, 24.5f
+        )
+        temperatureHistory.addAll(dummyTemperatures)
     }
 }

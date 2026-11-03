@@ -146,6 +146,52 @@
                 expectedWeatherCode = expCode
             )
         }
+
+        fun loadDummyData() {
+            _isLoading.value = false
+            _routeCities.value = listOf(
+                RouteStop(
+                    cityName = "Budapest",
+                    currentTemp = "22°C",
+                    expectedTemp = "24°C",
+                    expectedTime = "08:00",
+                    currentWeatherCode = 1,
+                    expectedWeatherCode = 1
+                ),
+                RouteStop(
+                    cityName = "Tatabánya",
+                    currentTemp = "23°C",
+                    expectedTemp = "25°C",
+                    expectedTime = "09:00",
+                    currentWeatherCode = 1,
+                    expectedWeatherCode = 2
+                ),
+                RouteStop(
+                    cityName = "Győr",
+                    currentTemp = "24°C",
+                    expectedTemp = "25°C",
+                    expectedTime = "10:00",
+                    currentWeatherCode = 2,
+                    expectedWeatherCode = 2
+                ),
+                RouteStop(
+                    cityName = "Hegyeshalom",
+                    currentTemp = "25°C",
+                    expectedTemp = "26°C",
+                    expectedTime = "11:00",
+                    currentWeatherCode = 1,
+                    expectedWeatherCode = 3
+                ),
+                RouteStop(
+                    cityName = "Bécs",
+                    currentTemp = "25°C",
+                    expectedTemp = "24°C",
+                    expectedTime = "12:00",
+                    currentWeatherCode = 3,
+                    expectedWeatherCode = 3
+                )
+            )
+        }
     }
 
     // FONTOS: Módosítva, hogy (Index, Koordináta) párt adjon vissza!
@@ -166,3 +212,4 @@
         }
         return selectedCoordinates
     }
+
