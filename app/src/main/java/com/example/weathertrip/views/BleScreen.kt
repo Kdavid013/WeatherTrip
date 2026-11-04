@@ -15,9 +15,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weathertrip.R
 import com.example.weathertrip.apptheme.cardColor
 import com.example.weathertrip.apptheme.fieldColor
 import com.example.weathertrip.apptheme.fontColor
@@ -53,7 +55,7 @@ fun BleScreen(viewModel: BleViewModel) { // Kivettük a hibás default értéket
             .padding(top = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Állapot: ${viewModel.connectionState}", fontSize = 16.sp, color = fontColor)
+        Text(text = stringResource(R.string.ble_status, viewModel.connectionState), fontSize = 16.sp, color = fontColor)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -69,7 +71,7 @@ fun BleScreen(viewModel: BleViewModel) { // Kivettük a hibás default értéket
                 horizontalArrangement = Arrangement.SpaceAround
             ) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Hőmérséklet", fontSize = 14.sp,  color = fontColor)
+                    Text(stringResource(R.string.temperature), fontSize = 14.sp,  color = fontColor)
                     Text(
                         text = "${viewModel.temperature} °C",
                         fontSize = 24.sp,
@@ -78,7 +80,7 @@ fun BleScreen(viewModel: BleViewModel) { // Kivettük a hibás default értéket
                     )
                 }
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text("Páratartalom", fontSize = 14.sp,  color = fontColor)
+                    Text(stringResource(R.string.humidity), fontSize = 14.sp,  color = fontColor)
                     Text(
                         text = "${viewModel.humidity} %",
                         fontSize = 24.sp,
@@ -114,7 +116,10 @@ fun BleScreen(viewModel: BleViewModel) { // Kivettük a hibás default értéket
             border = BorderStroke(1.dp, fontColor),
             colors = ButtonDefaults.buttonColors(containerColor = fieldColor)
         ) {
-            Text(if (viewModel.isScanning) "Keresés leállítása" else "Eszközök keresése",  color = fontColor)
+            Text(
+                if (viewModel.isScanning) stringResource(R.string.btn_stop_scan) else stringResource(R.string.btn_start_scan),
+                color = fontColor
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -131,7 +136,11 @@ fun BleScreen(viewModel: BleViewModel) { // Kivettük a hibás default értéket
                     colors = CardDefaults.cardColors(containerColor = cardColor)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        Text(text = peripheral.name ?: "Ismeretlen eszköz", fontSize = 16.sp,  color = fontColor)
+                        Text(
+                            text = if (peripheral.name.isNullOrBlank()) stringResource(R.string.unknown_device) else peripheral.name,
+                            fontSize = 16.sp,
+                            color = fontColor
+                        )
                         Text(text = "MAC: ${peripheral.address}", fontSize = 12.sp,  color = fontColor)
                     }
                 }

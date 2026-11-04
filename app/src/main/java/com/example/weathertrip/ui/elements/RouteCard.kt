@@ -24,6 +24,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
@@ -100,7 +101,7 @@ fun RouteCard (
                             .padding(8.dp)
                     ) {
                         Text(
-                            "Now:",
+                            stringResource(R.string.label_now),
                             fontFamily = interFontFamily,
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
@@ -134,7 +135,7 @@ fun RouteCard (
                             .padding(8.dp)
                     ) {
                         Text(
-                            "Expected:",
+                            stringResource(R.string.label_expected),
                             fontFamily = interFontFamily,
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,
@@ -159,7 +160,7 @@ fun RouteCard (
                         }
                         Spacer(Modifier.height(10.dp))
                         Text(
-                            "At $expectedTime",
+                            stringResource(R.string.label_at_time, expectedTime),
                             fontFamily = interFontFamily,
                             fontWeight = FontWeight.Normal,
                             fontSize = 12.sp,

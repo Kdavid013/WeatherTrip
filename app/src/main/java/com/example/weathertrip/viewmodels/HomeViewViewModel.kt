@@ -54,8 +54,6 @@ class HomeViewViewModel : ViewModel() {
                 .collectLatest { query ->
                     _startSuggestions.value = fetchSuggestions(query)
                 }
-
-
         }
 
         // Célállomás figyelése debounce-szal

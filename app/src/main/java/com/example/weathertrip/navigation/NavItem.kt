@@ -1,29 +1,29 @@
 package com.example.weathertrip.navigation
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 import com.example.weathertrip.R
 
 class NavItem (
     @DrawableRes val icon: Int,
-    val label: String
+    @StringRes val labelRes: Int
 )
 
 val TOP_LEVEL_DESTINATIONS = mapOf(
     Route.Home to NavItem(
         icon = R.drawable.home,
-        label = "Home"
+        labelRes = R.string.nav_home
     ),
     Route.Trip to NavItem(
         icon = R.drawable.route,
-        label = "Route"
+        labelRes = R.string.nav_route
     ),
     Route.Statictics to NavItem(
         icon = R.drawable.statistics,
-        label = "Route"
+        labelRes = R.string.nav_statistics
     ),
     Route.Settings to NavItem(
         icon = R.drawable.settings,
-        label = "Route"
-    ),
-
+        labelRes = R.string.nav_settings
+    )
 )

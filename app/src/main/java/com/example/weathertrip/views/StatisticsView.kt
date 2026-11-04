@@ -27,12 +27,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import co.yml.charts.axis.AxisData
 import co.yml.charts.common.model.Point
+import com.example.weathertrip.R
 import co.yml.charts.ui.barchart.models.BarData
 import co.yml.charts.ui.barchart.models.BarPlotData
 import co.yml.charts.ui.barchart.models.BarStyle
@@ -166,14 +168,14 @@ fun StatisticsView(
             .padding(24.dp)
     ) {
         Text(
-            text = "Statisztika",
+            text = stringResource(R.string.statistics_title),
             fontFamily = interFontFamily,
             fontWeight = FontWeight.Bold,
             fontSize = 24.sp,
             color = fontColor
         )
         Text(
-            text = "Várható vs. Mért hőmérséklet az útvonalon",
+            text = stringResource(R.string.statistics_subtitle),
             fontFamily = interFontFamily,
             fontWeight = FontWeight.Normal,
             fontSize = 14.sp,
@@ -198,12 +200,12 @@ fun StatisticsView(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(modifier = Modifier.size(16.dp).background(fieldColor, shape = RoundedCornerShape(4.dp)))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Várható (Útvonal)", fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor)
+                    Text(stringResource(R.string.legend_expected), fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor)
                 }
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(modifier = Modifier.size(16.dp, 4.dp).background(accentColor))
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Mért (ESP32)", fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor)
+                    Text(stringResource(R.string.legend_measured), fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor)
                 }
             }
         }
@@ -246,7 +248,7 @@ fun StatisticsView(
         ) {
             Column(modifier = Modifier.padding(16.dp)) {
                 Text(
-                    text = "Áttekintés",
+                    text = stringResource(R.string.overview_title),
                     fontFamily = interFontFamily,
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 16.sp,
@@ -261,7 +263,7 @@ fun StatisticsView(
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column {
-                        Text("Átlagos várható:", fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor.copy(alpha = 0.8f))
+                        Text(stringResource(R.string.avg_expected), fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor.copy(alpha = 0.8f))
                         val avgExpected = if (expectedTemps.isNotEmpty()) expectedTemps.average() else 0.0
                         Text(
                             text = String.format(Locale.US, "%.1f °C", avgExpected),
@@ -273,7 +275,7 @@ fun StatisticsView(
                     }
 
                     Column {
-                        Text("Legutóbbi mért:", fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor.copy(alpha = 0.8f))
+                        Text(stringResource(R.string.last_measured), fontFamily = interFontFamily, fontSize = 12.sp, color = fontColor.copy(alpha = 0.8f))
                         val lastMeasured = bleViewModel?.temperature ?: "--"
                         Text(
                             text = if (lastMeasured != "--") "$lastMeasured °C" else String.format(Locale.US, "%.1f °C", measuredTemps.lastOrNull() ?: 0f),

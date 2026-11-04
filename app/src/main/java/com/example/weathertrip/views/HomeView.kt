@@ -60,7 +60,7 @@ fun HomeView(
             // 1. Kezdőpont mező a javaslatokkal
             AutoCompleteInputField(
                 label = stringResource(R.string.start_point),
-                placeholder = "From",
+                placeholder = stringResource(R.string.placeholder_from),
                 value = startQuery,
                 suggestions = startSuggestions,
                 onValueChange = { viewModel.onStartQueryChange(it) },
@@ -69,8 +69,8 @@ fun HomeView(
 
             // 2. Célállomás mező a javaslatokkal
             AutoCompleteInputField(
-                label = "Destination",
-                placeholder = "To",
+                label = stringResource(R.string.destination),
+                placeholder = stringResource(R.string.placeholder_to),
                 value = destinationQuery,
                 suggestions = destinationSuggestions,
                 onValueChange = { viewModel.onDestinationQueryChange(it) },
@@ -78,7 +78,10 @@ fun HomeView(
             )
 
             // 3. Dátumválasztó (hagyományos InputField)
-            InputField("Date", "Pick a date")
+            InputField(
+                label = stringResource(R.string.date),
+                fieldText = stringResource(R.string.pick_a_date)
+            )
             TravelModeSelector(
                 selectedMode = selectedTravelMode,
                 onModeSelected = { viewModel.onTravelModeChange(it) }
@@ -98,7 +101,7 @@ fun HomeView(
                 colors = ButtonDefaults.buttonColors(containerColor = fieldColor)
             ) {
                 Text(
-                    text = "GO",
+                    text = stringResource(R.string.btn_go),
                     fontFamily = interFontFamily,
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 32.sp,

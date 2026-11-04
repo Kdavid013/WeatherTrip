@@ -1,4 +1,44 @@
 <resources>
     <string name="app_name" translatable="false">WeatherTrip</string>
     <string name="start_point">Start point</string>
+    <string name="placeholder_from">From</string>
+    <string name="destination">Destination</string>
+    <string name="placeholder_to">To</string>
+    <string name="date">Date</string>
+    <string name="pick_a_date">Pick a date</string>
+    <string name="btn_go">GO</string>
+
+    <string name="nav_home">Home</string>
+    <string name="nav_route">Route</string>
+    <string name="nav_statistics">Statistics</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="mode_driving">Driving</string>
+    <string name="mode_cycling">Cycling</string>
+    <string name="mode_walking">Walking</string>
+
+    <string name="label_now">Now:</string>
+    <string name="label_expected">Expected:</string>
+    <string name="label_at_time">At %s</string>
+
+    <string name="ble_status">Status: %s</string>
+    <string name="temperature">Temperature</string>
+    <string name="humidity">Humidity</string>
+    <string name="btn_start_scan">Search Devices</string>
+    <string name="btn_stop_scan">Stop Search</string>
+    <string name="unknown_device">Unknown Device</string>
+
+    <string name="statistics_title">Statistics</string>
+    <string name="statistics_subtitle">Expected vs. Measured temperature on route</string>
+    <string name="legend_expected">Expected (Route)</string>
+    <string name="legend_measured">Measured (ESP32)</string>
+    <string name="overview_title">Overview</string>
+    <string name="avg_expected">Average Expected:</string>
+    <string name="last_measured">Latest Measured:</string>
+
+    <string name="stop_start">Start</string>
+    <string name="stop_destination">Destination</string>
+    <string name="time_now">Now</string>
+    <string name="time_en_route">En route</string>
+    <string name="time_arrival">Arrival</string>
 </resources>

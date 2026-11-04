@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="start_point">Kezdőpont</string>
+    <string name="placeholder_from">Honnan</string>
+    <string name="destination">Célállomás</string>
+    <string name="placeholder_to">Hova</string>
+    <string name="date">Dátum</string>
+    <string name="pick_a_date">Válassz dátumot</string>
+    <string name="btn_go">GO</string>
+
+    <string name="nav_home">Főoldal</string>
+    <string name="nav_route">Útvonal</string>
+    <string name="nav_statistics">Statisztika</string>
+    <string name="nav_settings">Beállítások</string>
+
+    <string name="mode_driving">Autó</string>
+    <string name="mode_cycling">Kerékpár</string>
+    <string name="mode_walking">Gyalog</string>
+
+    <string name="label_now">Jelenleg:</string>
+    <string name="label_expected">Várható:</string>
+    <string name="label_at_time">%s-kor</string>
+
+    <string name="ble_status">Állapot: %s</string>
+    <string name="temperature">Hőmérséklet</string>
+    <string name="humidity">Páratartalom</string>
+    <string name="btn_start_scan">Eszközök keresése</string>
+    <string name="btn_stop_scan">Keresés leállítása</string>
+    <string name="unknown_device">Ismeretlen eszköz</string>
+
+    <string name="statistics_title">Statisztika</string>
+    <string name="statistics_subtitle">Várható vs. Mért hőmérséklet az útvonalon</string>
+    <string name="legend_expected">Várható (Útvonal)</string>
+    <string name="legend_measured">Mért (ESP32)</string>
+    <string name="overview_title">Áttekintés</string>
+    <string name="avg_expected">Átlagos várható:</string>
+    <string name="last_measured">Legutóbbi mért:</string>
+
+    <string name="stop_start">Indulás</string>
+    <string name="stop_destination">Célállomás</string>
+    <string name="time_now">Most</string>
+    <string name="time_en_route">Útközben</string>
+    <string name="time_arrival">Érkezéskor</string>
 </resources>

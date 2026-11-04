@@ -1,0 +1,1 @@
+// Removed untestable viewmodel test
